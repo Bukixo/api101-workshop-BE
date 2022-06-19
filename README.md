@@ -125,16 +125,24 @@ app.use(bodyParser.urlencoded({ extended: true }))
 The first function parameter request will be useful to access the body of the request. You can do the following to get a parameter: request.body.parameterName.
 
 ```
-app.post('/books', (request, response) => {
-  // We get the parameter 'name' from the body
-  const bookName = request.body.name
+app.post('/addCakes', (request, response) => {
+    const cakeName = request.body.name
+    const cakeTier = request.body.tierNumber
+    const cakePrice = request.body.price
+    console.log(request.body)
 
-  // We check if the book list includes the new book
-  // If it is, we return 'false'
-  if (bookList.includes(bookName)) return response.json({ success: false })
+    let cakeInstance = {
+        name: cakeName,
+        tierNumber: cakeTier,
+        price: cakePrice
+    }
 
-  // Otherwise, we add the new book in the list and return 'true'
-  bookList.push(bookName)
-  return response.json({ success: true })
-})
+    const cakeAlreadyExists = cakes.some(x => x.name === cakeName && x.tierNumber === cakeTier && x.price === cakePrice)
+
+    if (cakeAlreadyExists)
+    return response.send("Cake instance already exists")
+
+    cakes.push(cakeInstance)
+    console.log(cakes)
+    return response.send(`New cake instance: ${cakeInstance.name}, has been added`)
 ```
