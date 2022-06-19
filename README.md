@@ -84,3 +84,57 @@ inside our package.json
     "start": "nodemon index.js"
 },
 ```
+
+2. Creat first route
+API routes hwoever non exist - test on postman
+
+```
+// The code below creates a GET route with these parameters:
+// 1 - The route where the code will be executed
+// 2 - The function containing the code to execute
+app.get('/', (request, response) => {
+  // The string we want to display on http://localhost:3000
+  response.send('Welcome on the books API! Take a breath and start using it!')
+})
+```
+
+Now let's be more specific to get all books, where we give a specfic route name, returning in JSON which isa popular format for API/
+
+```
+app.get(`/cakes`, (request, response) => {
+    response.json(cakes)
+})
+```
+
+Create a route to add a Cake
+
+In order to recieve parameters we need to install the npm package body-parser.
+
+```
+npm install body-parser
+```
+
+```
+// Import body-parser (to handle parameters more easily)
+import bodyParser from 'body-parser'
+```
+```
+/ Indicate to Express.js that you're using an additional plugin to treat parameters
+app.use(bodyParser.urlencoded({ extended: true }))
+```
+The first function parameter request will be useful to access the body of the request. You can do the following to get a parameter: request.body.parameterName.
+
+```
+app.post('/books', (request, response) => {
+  // We get the parameter 'name' from the body
+  const bookName = request.body.name
+
+  // We check if the book list includes the new book
+  // If it is, we return 'false'
+  if (bookList.includes(bookName)) return response.json({ success: false })
+
+  // Otherwise, we add the new book in the list and return 'true'
+  bookList.push(bookName)
+  return response.json({ success: true })
+})
+```
