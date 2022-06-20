@@ -146,3 +146,57 @@ app.post('/addCakes', (request, response) => {
     console.log(cakes)
     return response.send(`New cake instance: ${cakeInstance.name}, has been added`)
 ```
+
+Create update route
+
+```
+app.put('/cakes', (request, response) => {
+  // We get the parameters 'nameToUpdate' and 'updatedName' from the body
+    const cakeNameToUpdate = request.body.nameToUpdate
+    const updatedCakeName = request.body.updatedName
+
+    const cakeTierToUpdate = request.body.tierToUpdate
+    const updatedCakeTier = request.body.updatedTier
+
+// We search if the book to update is in the list
+    const indexOfCakeToUpdate = cakes.findIndex(
+        (cake) => cake.name === cakeNameToUpdate || cake.tierNumber === cakeTierToUpdate
+    )
+    console.log(updatedCakeTier, cakeNameToUpdate)
+    if (indexOfCakeToUpdate === -1) return response.json(
+        {
+            success: false
+        }
+    )
+
+// If it is not a book from the list, we return 'false'
+    if (updatedCakeTier != undefined) {
+        cakes[indexOfCakeToUpdate].tierNumber = updatedCakeTier
+
+    }
+
+    if (updatedCakeName != undefined) {
+        cakes[indexOfCakeToUpdate].name = updatedCakeName
+
+    }
+    return response.json({ success: true })
+})
+
+Delete the book
+
+```
+app.delete('/books', (request, response) => {
+  // We get the parameter 'name' from the body
+  const bookToDelete = request.body.name
+
+  // We create a new array with all elements different from the book to delete
+  bookList = bookList.filter((book) => book !== bookToDelete)
+
+  // We return the new list
+  return response.json({ allBooks: bookList })
+})
+```
+
+What a route is? A route is the complete URL path. For example "http://localhost:3000/books".
+
+What an endpoint is? An endpoint is the end of your URL path. For example if your full URL is "http://localhost:3000/books", your endpoint is "/books".
