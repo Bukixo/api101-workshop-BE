@@ -23,17 +23,17 @@ app.get(`/cakes`, (request, response) => {
 })
 
 app.post('/addCakes', (request, response) => {
-    const cakeName = request.body.name
-    const cakeTier = request.body.tierNumber
-    const cakePrice = request.body.price
+    const cakeNameBody = request.body.name
+    const cakeTierBody = request.body.tierNumber
+    const cakePriceBody = request.body.price
 
     let cakeInstance = {
-        name: cakeName,
-        tierNumber: cakeTier,
-        price: cakePrice
+        name: cakeNameBody,
+        tierNumber: cakeTierBody,
+        price: cakePriceBody
     }
 
-    const cakeAlreadyExists = cakes.some(x => x.name === cakeName && x.tierNumber === cakeTier && x.price === cakePrice)
+    const cakeAlreadyExists = cakes.some(cake => cake.name === cakeNameBody && cake.tierNumber === cakeTierBody && cake.price === cakePriceBody)
 
     if (cakeAlreadyExists)
         return response.send("Cake instance already exists")
@@ -53,7 +53,7 @@ app.put('/cakes', (request, response) => {
         (cake) => cake.name === cakeNameToUpdate || cake.tierNumber === cakeTierToUpdate
     )
     console.log(updatedCakeTier, cakeNameToUpdate)
-    if (indexOfCakeToUpdate === -1) return response.json(
+    if (indexOfCakeToUpdate === -1) return response.send(
         {
             success: false
         }
@@ -72,9 +72,9 @@ app.put('/cakes', (request, response) => {
 })
 
 app.delete('/cakes', (request, response) => {
-  const cakeTodelete = request.body.name  
+    const cakeTodelete = request.body.name
 
-  cakes = cakes.filter((cake) => cake.name !== cakeTodelete)
+    cakes = cakes.filter((cake) => cake.name !== cakeTodelete)
 
-  return response.json(cakes)
+    return response.json(cakes)
 })
