@@ -1,19 +1,78 @@
-# api101-workshop-BE
+# Introduction to API'S
 
-# api101-workshop-BE
 
 Prerequistes
 - install npm
 - install latest version of node
 - install postman
 
-Things we will be covering
 
-Theorectical
+## Theoretical
 
-1. What is an API and how is it used?
-2. What is Postman
-3. What is express
+Link to slides https://docs.google.com/presentation/d/1V7LihAqOY_hT5MeuNKIDnXUKGXJ3ur9ivI3xpdS57Mg/edit?usp=sharing
+
+### What is an API
+
+The term API is an acronym, and it stands for “Application Programming Interface.”
+
+Think of an API like a waiter in a restaurant. He provides the menu which provides a list of dishes you can order, along with a description of each dish. When you specify what menu items you want, the restaurant’s kitchen does the work and provides you with some finished dishes. You don’t know exactly how the restaurant prepares that food, and you don’t really need to. The waiter goes and fetches the dish for you.
+
+Similarly, an API lists a bunch of operations that developers can use, along with a description of what they do. 
+In other words, if you want to interact with a computer or system to retrieve information or perform a function, an API helps you communicate what you want to that system so it can understand and fulfill the request. 
+
+The client makes use of the API to request specific information. The API will go fetch a resource, which can be any object the API can offer info about. A server is any system that contains resources that the client wants.
+
+
+For example, instagram’s API would offer a sso service in their API, which will allow consumers of the API to use their sso to authenticate their application. The application is not affiliated with instagram, nor does it care under the hood how the authentication process is down. You as the consumer just enter your details, the API of the social media login does the work in background and then gives you access to enter the website.
+
+- Mini Range is the client
+- Instagram’s user via the api is the resource used to authenticate
+- Instagrams acts as the server, to cross reference the user credentials
+
+
+
+What is a RESTFUL API
+
+Brief History of REST
+Before the launch of the REST protocol in 2000, web developers had no standard of how to develop a web API or even use one. Many protocols were used at that time, but they proved too tedious and complicated to carry out. Together with his colleagues, Roy Fielding sought to address this problem and developed what is known today as the REST protocol. The development of REST allowed two servers to exchange data worldwide. 
+
+REST-compliant systems are called RESTful systems. These systems are characterized by their statelessness and the separation of client and server concerns. Since its launch in 2000, many companies such as eBay and Amazon have used the REST protocol. 
+
+The 5 Principles of REST 
+REST has five basic principles that it operates with.
+
+1. Client-Server Mandate
+The REST protocol allows for independent implementation for the client and the server. This independence means that both parties can make changes without knowing or interacting with one another.
+
+2. Statelessness
+which means calls can be made independent of one another. Not saving means the server treats every session as new and cannot take advantage of any previous information stored on the server.
+
+3. Cacheable 
+The response is cachable.
+Caching Reduces bandwidth and decrease latency by decreasing the number of trips to and from the server for fetching data from memory.
+
+4. Uniform Interface
+The client and server interact in a uniform and predictable way. An important aspect of this is that the server exposes resources.
+
+5. Layered System
+The application behaves the same regardless of any intermediaries between the client and server.
+
+### How REST API's work
+
+As we have now established, REST defines the structure of an API with a set of rules. 
+One rule states that linking to a URL should always return some information.
+
+Every URL is known as a Request, whereas the data returned is known as Response.
+The end of the url path which in out case it ‘prideandprejudice’ is what we call an endpoint. This communicates back and forth with a server to which it is connected to but we will see more of this in the practical.
+
+
+REST API breaks a transaction down to generate a sequence of small components. Every component addresses a specific fundamental aspect of a transaction. It uses the following HTTP requests:
+
+- GET request to fetch data
+- PUT request to alter the state of data 
+- POST request  to create data
+- DELETE request to eliminate it
+
 
 
 Pracitcal
@@ -129,6 +188,7 @@ As we already know, the backbone of an API is the ability to navigate through ro
 // The code below creates a GET route with these parameters:
 // 1 - The route where the code will be executed
 // 2 - The function containing the code to execute
+// The http method - GET maps to the READ crud function
 app.get('/', (request, response) => {
   // The string we want to display on http://localhost:3000
   response.send('Welcome on the Cakes API!")
@@ -228,7 +288,7 @@ app.put('/cakes', (request, response) => {
         }
     )
 
-// If it is not a book from the list, we return 'false'
+// If it is not a cake from the list, we return 'false'
     if (updatedCakeTier != undefined) {
         cakes[indexOfCakeToUpdate].tierNumber = updatedCakeTier
 
@@ -243,7 +303,7 @@ app.put('/cakes', (request, response) => {
 ```
 Again we check on postman that we are bale to update the a cake instance successfully.
 
-### 4. Delete the book
+### 4. Delete the cake
 
 The last route we will be creating is the delete request.
 
@@ -256,7 +316,3 @@ app.delete('/cakes', (request, response) => {
     return response.json(cakes)
 })
 ```
-
-What a route is? A route is the complete URL path. For example "http://localhost:3000/books".
-
-What an endpoint is? An endpoint is the end of your URL path. For example if your full URL is "http://localhost:3000/books", your endpoint is "/books".a
